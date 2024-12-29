@@ -1,0 +1,33 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'Muli';
+    src: url(./font/Muli/Mulish-VariableFont_wght.eot),
+    url(./font/Muli/Mulish-VariableFont_wght.otf),
+    url(./font/Muli/Mulish-VariableFont_wght.ttf),
+    url(./font/Muli/Mulish-VariableFont_wght.woff),
+    url(./font/Muli/Mulish-VariableFont_wght.woff2);
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url(./font/Inter/Inter-VariableFont_opsz\,wght.eot),
+    url(./font/Inter/Inter-VariableFont_opsz\,wght.otf),
+    url(./font/Inter/Inter-VariableFont_opsz\,wght.ttf),
+    url(./font/Inter/Inter-VariableFont_opsz\,wght.woff),
+    url(./font/Inter/Inter-VariableFont_opsz\,wght.woff2);
+}
+
+body{
+    background: linear-gradient(151deg, #8E2DE2 0%, #4A00E0 100%);
+    margin: 0 auto;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    background-repeat: no-repeat;
+}

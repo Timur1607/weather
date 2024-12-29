@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js" defer></script>
+</head>
+<body>
+    <div class="weather">
+        <h1 class="weather__title">weather</h1>
+        <div class="weather__info">
+            <p class="weather__info_temperature">8℃</p>
+            <p class="weather__info_location">Windy in Moscow</p>
+            <input class="weather__info_button" type="submit" value="Change city"></input>
+        </div>
+        <form class="search__city search__script">
+            <input class="search__city_input" type="text" placeholder="Type your city here">
+            <input class="search__city_button" type="submit" value="Find">
+        </form>
+        <div class="mistake mistake__script">
+            <div class="mistake__top">
+                <p class="mistake__top_text1">Ooops. Something went wrong.</p>
+                <p class="mistake__top_text2">Error info</p>
+            </div>
+            <button class="mistake__tryAgain">Try again</button>
+        </div>
+        <p class="weather__footer">With ❤️ by Alex</p>
+    </div>
+</body>
+</html>
