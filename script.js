@@ -17,20 +17,26 @@ let correctCityName = ''
 let temp = document.querySelector('.weather__info_temperature')
 
 let info = document.querySelector('.weather__info_location')
-
-
+let img = document.querySelector('.weather__info_img')
+let icon = ''
 
 
 async function getWeather(cityName){
     const geo = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API}`)
     const data = await geo.json()
     console.log(data);
-    // console.log(data.cod);
+    
+    // console.log(icon);
+    
+
 
     console.log(cod);
     console.log(data.cod);
     if(data.cod === 200){
         console.log('работает');
+        icon = data.weather[0].icon
+        img.classList.toggle('weather__info_imgScript')
+        img.src = `https://openweathermap.org/img/wn/${icon}@2x.png`
         
         let tempretureInKel = data.main.temp
         console.log(tempretureInKel);
@@ -59,6 +65,7 @@ async function getWeather(cityName){
 changeCity.addEventListener('click', () => {
     searchScript.classList.toggle('search__script')
     weatherInfo.classList.toggle('info__script')
+    img.classList.toggle('weather__info_imgScript')
     searchInput.value = ''
 })
 
