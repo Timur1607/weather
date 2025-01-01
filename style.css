@@ -145,6 +145,9 @@ body {
 .info__script {
   display: none;
 }
+.info__script_time {
+  opacity: 0;
+}
 
 .search__city {
   display: flex;
@@ -166,6 +169,7 @@ body {
   border-color: rgba(255, 255, 255, 0.75);
   text-align: center;
   margin-bottom: 36px;
+  outline: none;
 }
 .search__city_input::-moz-placeholder {
   color: rgba(255, 255, 255, 0.7);
