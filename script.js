@@ -5,8 +5,8 @@ let weatherInfo = document.querySelector('.weather__info')
 let searchInput = document.querySelector('.search__city_input')
 let mistake = document.querySelector('.mistake')
 let tryAgain = document.querySelector('.mistake__tryAgain')
+let div = document.querySelector('.weather__info')
 
-// let arr = ['Moscow', "Sochi"]
 let city = ''
 let API = '0f229bddf16ed64444cf47fad115ac05'
 let cod = 0
@@ -20,52 +20,68 @@ let info = document.querySelector('.weather__info_location')
 let img = document.querySelector('.weather__info_img')
 let icon = ''
 
+let lat = null
+let lon = null
 
 async function getWeather(cityName){
-    const geo = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API}`)
-    const data = await geo.json()
-    console.log(data);
     
-    // console.log(icon);
+    if(cityName !== '0'){
+        const geo = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API}`)
+        console.log('с городом');
+        const data = await geo.json()
+        console.log(data);
+
+        if(data.cod === 200){
+            console.log('работает');
+            icon = data.weather[0].icon
+            img.src = `https://openweathermap.org/img/wn/${icon}@2x.png`
+            img.alt = `weather picture`
+            let tempretureInKel = data.main.temp
+            cityTempreture = (tempretureInKel - 273.15).toFixed(1)
+            description = data.weather[0].description
+            correctCityName = data.name
+
+            remakeInfoText()
+        } else if(data.cod === '404'){
+            console.log('ошибка');
+            
+            weatherInfo.classList.toggle('info__script')
+            mistake.classList.toggle('mistake__script')
+        }
+        
+        return cityTempreture, description, correctCityName
+    } else if(cityName === '0'){
+        const geo = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API}`)
+        console.log('без города');
+
+        const data = await geo.json()
+        console.log(data);
     
-
-
-    console.log(cod);
-    console.log(data.cod);
-    if(data.cod === 200){
-        console.log('работает');
-        icon = data.weather[0].icon
-        img.classList.toggle('weather__info_imgScript')
-        img.src = `https://openweathermap.org/img/wn/${icon}@2x.png`
+        if(data.cod === 200){
+            console.log('работает');
+            icon = data.weather[0].icon
+            img.src = `https://openweathermap.org/img/wn/${icon}@2x.png`
+            img.alt = `weather picture`
+            let tempretureInKel = data.main.temp
+            cityTempreture = (tempretureInKel - 273.15).toFixed(1)
+            description = data.weather[0].description
+            correctCityName = data.name
+    
+            remakeInfoText()
+        } else if(data.cod === '404'){
+            console.log('ошибка');
+            
+            weatherInfo.classList.toggle('info__script')
+            mistake.classList.toggle('mistake__script')
+        }
         
-        let tempretureInKel = data.main.temp
-        console.log(tempretureInKel);
-        
-        cityTempreture = (tempretureInKel - 273.15).toFixed(1)
-        console.log(cityTempreture);
-        description = data.weather[0].description
-        console.log(description);
-        correctCityName = data.name
-
-        remakeInfoText()
-    } else if(data.cod === '404'){
-        console.log('ошибка');
-        
-        weatherInfo.classList.toggle('info__script')
-        mistake.classList.toggle('mistake__script')
+        return cityTempreture, description, correctCityName
     }
-    console.log('ты тут');
-    
-
-    cod = data.cod
-    return cityTempreture, description, cod, correctCityName
 }
-
 
 changeCity.addEventListener('click', () => {
     searchScript.classList.toggle('search__script')
     weatherInfo.classList.toggle('info__script')
-    img.classList.toggle('weather__info_imgScript')
     searchInput.value = ''
 })
 
@@ -76,7 +92,7 @@ let mistakeWindow = ()  => {
 
 let remakeInfoText = () => {
     let check = false   
-    console.log('рили');
+    console.log('меняем текст)))))');
     
     info.textContent = `${description} in ${correctCityName}`
     temp.textContent = `${cityTempreture}℃`
@@ -107,6 +123,20 @@ let backToSearch = () => {                  //кнопка назад в пои�
     searchInput.value = ''
 }
 
-
 tryAgain.addEventListener('click', () => backToSearch())
 searchScript.addEventListener('submit', () => searchingTheWeather(event))
+
+function receivedLoc(data){
+    lat = data.coords.latitude
+    lon = data.coords.longitude
+    console.log(lat, lon);
+    getWeather('0')
+    return lat, lon
+}
+function notReceivedLoc(data){
+    console.log('error');
+    weatherInfo.classList.toggle('info__script')
+    mistake.classList.toggle('mistake__script')
+}
+
+navigator.geolocation.getCurrentPosition(receivedLoc, notReceivedLoc);
