@@ -51,10 +51,15 @@ async function getWeather(cityName){
         
         return cityTempreture, description, correctCityName
     } else if(cityName === '0'){
-        const geo = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API}`)
+        const geotime = await fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=at_i6rHVLjG83GMHtTUwy5VTe0xqAGnu&ipAddress=`)
         console.log('без города');
+        const datatime = await geotime.json()
+        let CITY = datatime.location.region
+        console.log(CITY);
 
+        const geo = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API}`)
         const data = await geo.json()
+        
         console.log(data);
     
         if(data.cod === 200){
@@ -140,3 +145,4 @@ function notReceivedLoc(data){
 }
 
 navigator.geolocation.getCurrentPosition(receivedLoc, notReceivedLoc);
+console.log(window.navigator.getCurrentPosition);
